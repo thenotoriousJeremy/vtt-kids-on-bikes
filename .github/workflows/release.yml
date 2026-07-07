@@ -1,8 +1,11 @@
 name: Release
 
+# Cut a release whenever the version in system.json changes on main.
+# Bump "version" in system.json, commit, push -> new release v<version>.
+# Pushes that don't change the version are skipped (tag already exists).
 on:
-  release:
-    types: [published]
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -12,20 +15,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Stamp version and download URL into system.json
+      - name: Read version and check tag
+        id: check
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
-          jq --arg v "$TAG" \
-             --arg dl "https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/system.zip" \
-             '.version=$v | .download=$dl' system.json > tmp.json && mv tmp.json system.json
+          VERSION=$(jq -r '.version' system.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag v$VERSION already exists — skipping release."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Stamp download URL into system.json
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          jq --arg dl "https://github.com/${GITHUB_REPOSITORY}/releases/download/v${{ steps.check.outputs.version }}/system.zip" \
+             '.download=$dl' system.json > tmp.json && mv tmp.json system.json
 
       - name: Zip system
+        if: steps.check.outputs.exists == 'false'
         run: |
           zip -r system.zip system.json kids-on-bikes.mjs module templates css lang packs LICENSE README.md -x "packs/_source/*" -x "packs/**/LOCK"
 
-      - name: Attach release assets
+      - name: Create release
+        if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.check.outputs.version }}
+          name: v${{ steps.check.outputs.version }}
           files: |
             system.json
             system.zip
