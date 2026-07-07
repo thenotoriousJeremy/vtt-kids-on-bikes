@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren11000000",
+  "_key": "!items!kobstren11000000",
+  "name": "Skilled at ___",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Genuinely good at one particular thing — fill in the blank.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

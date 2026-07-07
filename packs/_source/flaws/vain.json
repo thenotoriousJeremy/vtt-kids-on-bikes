@@ -1,0 +1,17 @@
+{
+  "_id": "kobflaw037000000",
+  "_key": "!items!kobflaw037000000",
+  "name": "Vain",
+  "type": "flaw",
+  "img": "icons/svg/downgrade.svg",
+  "system": {
+    "description": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

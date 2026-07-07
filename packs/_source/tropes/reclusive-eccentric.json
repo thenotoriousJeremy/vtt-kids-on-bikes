@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope08000000",
+  "_key": "!items!kobtrope08000000",
+  "name": "Reclusive Eccentric",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>The strange one in the old house at the edge of town.</p>",
+    "stats": {
+      "brains": 12,
+      "brawn": 8,
+      "charm": 4,
+      "fight": 6,
+      "flight": 20,
+      "grit": 10
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

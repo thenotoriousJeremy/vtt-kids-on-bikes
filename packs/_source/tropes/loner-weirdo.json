@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope03000000",
+  "_key": "!items!kobtrope03000000",
+  "name": "Loner Weirdo",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Keeps to themselves and endures more than anyone suspects.</p>",
+    "stats": {
+      "brains": 8,
+      "brawn": 10,
+      "charm": 4,
+      "fight": 12,
+      "flight": 6,
+      "grit": 20
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

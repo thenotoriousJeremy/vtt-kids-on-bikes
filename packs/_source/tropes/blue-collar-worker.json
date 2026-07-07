@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope04000000",
+  "_key": "!items!kobtrope04000000",
+  "name": "Blue-Collar Worker",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Hard hands, long shifts, and no patience for nonsense.</p>",
+    "stats": {
+      "brains": 6,
+      "brawn": 20,
+      "charm": 8,
+      "fight": 12,
+      "flight": 4,
+      "grit": 10
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

@@ -1,0 +1,17 @@
+{
+  "_id": "kobflaw013000000",
+  "_key": "!items!kobflaw013000000",
+  "name": "Greedy",
+  "type": "flaw",
+  "img": "icons/svg/downgrade.svg",
+  "system": {
+    "description": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

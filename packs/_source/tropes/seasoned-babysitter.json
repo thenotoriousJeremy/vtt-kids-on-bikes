@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope10000000",
+  "_key": "!items!kobtrope10000000",
+  "name": "Seasoned Babysitter",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Has handled worse than monsters: bedtime.</p>",
+    "stats": {
+      "brains": 8,
+      "brawn": 4,
+      "charm": 6,
+      "fight": 10,
+      "flight": 12,
+      "grit": 20
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

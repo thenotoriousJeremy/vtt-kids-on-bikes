@@ -1,0 +1,6 @@
+# LF in repo and working tree by default
+* text=auto eol=lf
+# Compiled LevelDB packs are binary — never convert line endings (must come last; later rules win)
+packs/tropes/** -text
+packs/strengths/** -text
+packs/flaws/** -text

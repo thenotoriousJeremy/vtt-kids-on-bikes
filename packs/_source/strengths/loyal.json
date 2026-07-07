@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren05000000",
+  "_key": "!items!kobstren05000000",
+  "name": "Loyal",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Never abandons a friend, no matter the cost.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

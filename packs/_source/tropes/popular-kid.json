@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope05000000",
+  "_key": "!items!kobtrope05000000",
+  "name": "Popular Kid",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Everyone wants to sit at their table. Charm opens every door in town.</p>",
+    "stats": {
+      "brains": 10,
+      "brawn": 12,
+      "charm": 20,
+      "fight": 6,
+      "flight": 4,
+      "grit": 8
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

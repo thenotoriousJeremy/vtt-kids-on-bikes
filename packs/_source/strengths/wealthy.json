@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren15000000",
+  "_key": "!items!kobstren15000000",
+  "name": "Wealthy",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Money is rarely the obstacle.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

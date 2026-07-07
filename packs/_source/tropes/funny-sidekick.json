@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope02000000",
+  "_key": "!items!kobtrope02000000",
+  "name": "Funny Sidekick",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Always has a joke ready, especially when things get scary.</p>",
+    "stats": {
+      "brains": 8,
+      "brawn": 4,
+      "charm": 20,
+      "fight": 6,
+      "flight": 12,
+      "grit": 10
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

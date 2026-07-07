@@ -1,0 +1,64 @@
+{
+  "TYPES.Actor.character": "Character",
+  "TYPES.Actor.powered": "Powered Character",
+  "TYPES.Item.trope": "Trope",
+  "TYPES.Item.strength": "Strength",
+  "TYPES.Item.flaw": "Flaw",
+  "TYPES.Item.backpack": "Backpack Item",
+  "TYPES.Item.aspect": "Aspect",
+
+  "KOB.Tabs.main": "Main",
+  "KOB.Tabs.traits": "Traits",
+  "KOB.Tabs.notes": "Notes",
+
+  "KOB.Stat.brains": "Brains",
+  "KOB.Stat.brawn": "Brawn",
+  "KOB.Stat.charm": "Charm",
+  "KOB.Stat.fight": "Fight",
+  "KOB.Stat.flight": "Flight",
+  "KOB.Stat.grit": "Grit",
+
+  "KOB.Age.child": "Child",
+  "KOB.Age.teen": "Teen",
+  "KOB.Age.adult": "Adult",
+  "KOB.AgeLabel": "Age",
+
+  "KOB.Name": "Name",
+  "KOB.NoTrope": "No Trope",
+  "KOB.DropTropeHint": "Drag a Trope from the compendium onto this sheet.",
+  "KOB.ApplyTropeStats": "Apply this Trope's suggested stat dice to the character?",
+
+  "KOB.Adversity": "Adversity Tokens",
+  "KOB.PsychicEnergy": "Psychic Energy",
+  "KOB.RollStat": "Roll stat check (exploding die)",
+  "KOB.TakeLoss": "Take the Loss (+1 Adversity)",
+  "KOB.TakesTheLoss": "{name} takes the loss and gains an adversity token.",
+  "KOB.UsePower": "Use Power",
+  "KOB.PsychicRoll": "Psychic Ability (2d4)",
+  "KOB.SpendPE": "Psychic Energy tokens to spend (+1 each, {pe} available):",
+  "KOB.NoPsychicEnergy": "No psychic energy tokens remaining.",
+  "KOB.Roll": "Roll",
+
+  "KOB.SpendAdversity": "Spend Adversity (+1)",
+  "KOB.Total": "Total",
+  "KOB.TokensSpent": "tokens spent",
+  "KOB.NoAdversity": "No adversity tokens to spend.",
+
+  "KOB.Section.strength": "Strengths",
+  "KOB.Section.flaw": "Flaws",
+  "KOB.Section.backpack": "Backpack",
+  "KOB.Section.aspect": "Aspects",
+
+  "KOB.Motivation": "Motivation",
+  "KOB.Fear": "Fear",
+  "KOB.Description": "Description",
+  "KOB.Notes": "Notes",
+  "KOB.Holder": "Card Holder (player)",
+  "KOB.Edit": "Edit",
+  "KOB.Delete": "Delete",
+  "KOB.Create": "Create",
+
+  "KOB.SheetCharacter": "Kids on Bikes Character Sheet",
+  "KOB.SheetPowered": "Kids on Bikes Powered Character Sheet",
+  "KOB.SheetItem": "Kids on Bikes Item Sheet"
+}

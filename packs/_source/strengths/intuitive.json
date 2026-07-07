@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren04000000",
+  "_key": "!items!kobstren04000000",
+  "name": "Intuitive",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Reads people and situations at a glance.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

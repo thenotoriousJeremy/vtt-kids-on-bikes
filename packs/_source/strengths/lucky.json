@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren06000000",
+  "_key": "!items!kobstren06000000",
+  "name": "Lucky",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Things have a way of breaking their direction.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

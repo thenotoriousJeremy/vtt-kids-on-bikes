@@ -1,0 +1,22 @@
+<section class="tab {{tab.cssClass}}" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="kob-fields">
+    <label class="kob-field">
+      <span>{{localize "KOB.Motivation"}}</span>
+      <input type="text" name="system.motivation" value="{{system.motivation}}">
+    </label>
+    <label class="kob-field">
+      <span>{{localize "KOB.Fear"}}</span>
+      <input type="text" name="system.fear" value="{{system.fear}}">
+    </label>
+  </div>
+
+  <div class="kob-editor">
+    <h3>{{localize "KOB.Description"}}</h3>
+    {{formInput systemFields.description value=system.description enriched=enrichedDescription toggled=true name="system.description"}}
+  </div>
+
+  <div class="kob-editor">
+    <h3>{{localize "KOB.Notes"}}</h3>
+    {{formInput systemFields.notes value=system.notes enriched=enrichedNotes toggled=true name="system.notes"}}
+  </div>
+</section>

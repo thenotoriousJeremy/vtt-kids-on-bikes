@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope09000000",
+  "_key": "!items!kobtrope09000000",
+  "name": "Stoic Professional",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Calm, capable, and impossible to rattle.</p>",
+    "stats": {
+      "brains": 12,
+      "brawn": 8,
+      "charm": 10,
+      "fight": 4,
+      "flight": 6,
+      "grit": 20
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

@@ -1,0 +1,84 @@
+<section class="tab {{tab.cssClass}}" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="kob-trait-section">
+    <h3>{{localize "TYPES.Item.trope"}}</h3>
+    {{#if trope}}
+    <ol class="kob-item-list">
+      <li data-item-id="{{trope.id}}">
+        <img src="{{trope.img}}" alt="">
+        <span class="kob-item-name">{{trope.name}}</span>
+        <a data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></a>
+        <a data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></a>
+      </li>
+    </ol>
+    {{else}}
+    <p class="kob-hint">{{localize "KOB.DropTropeHint"}}</p>
+    {{/if}}
+  </div>
+
+  <div class="kob-trait-section">
+    <h3>{{localize "KOB.Section.strength"}}
+      <a data-action="createItem" data-type="strength" title="{{localize 'KOB.Create'}}"><i class="fas fa-plus"></i></a>
+    </h3>
+    <ol class="kob-item-list">
+      {{#each strengths}}
+      <li data-item-id="{{id}}">
+        <img src="{{img}}" alt="">
+        <span class="kob-item-name">{{name}}</span>
+        <a data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></a>
+        <a data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></a>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="kob-trait-section">
+    <h3>{{localize "KOB.Section.flaw"}}
+      <a data-action="createItem" data-type="flaw" title="{{localize 'KOB.Create'}}"><i class="fas fa-plus"></i></a>
+    </h3>
+    <ol class="kob-item-list">
+      {{#each flaws}}
+      <li data-item-id="{{id}}">
+        <img src="{{img}}" alt="">
+        <span class="kob-item-name">{{name}}</span>
+        <a data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></a>
+        <a data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></a>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="kob-trait-section">
+    <h3>{{localize "KOB.Section.backpack"}}
+      <a data-action="createItem" data-type="backpack" title="{{localize 'KOB.Create'}}"><i class="fas fa-plus"></i></a>
+    </h3>
+    <ol class="kob-item-list">
+      {{#each backpack}}
+      <li data-item-id="{{id}}">
+        <img src="{{img}}" alt="">
+        <span class="kob-item-name">{{name}}</span>
+        <a data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></a>
+        <a data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></a>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+
+  {{#if isPowered}}
+  <div class="kob-trait-section">
+    <h3>{{localize "KOB.Section.aspect"}}
+      <a data-action="createItem" data-type="aspect" title="{{localize 'KOB.Create'}}"><i class="fas fa-plus"></i></a>
+    </h3>
+    <ol class="kob-item-list">
+      {{#each aspects}}
+      <li data-item-id="{{id}}">
+        <img src="{{img}}" alt="">
+        <span class="kob-item-name">{{name}}</span>
+        <span class="kob-aspect-holder">{{system.holder}}</span>
+        <a data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></a>
+        <a data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></a>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/if}}
+</section>

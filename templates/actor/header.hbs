@@ -1,0 +1,16 @@
+<header class="kob-header">
+  <img class="kob-portrait" src="{{actor.img}}" data-action="editImage" data-edit="img" alt="{{actor.name}}">
+  <div class="kob-identity">
+    <input class="kob-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'KOB.Name'}}">
+    <div class="kob-subline">
+      <label>{{localize "KOB.AgeLabel"}}
+        <select name="system.age">
+          {{#each ages}}
+          <option value="{{key}}" {{#if (eq key @root.system.age)}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+      </label>
+      <span class="kob-trope-name">{{#if trope}}{{trope.name}}{{else}}{{localize "KOB.NoTrope"}}{{/if}}</span>
+    </div>
+  </div>
+</header>

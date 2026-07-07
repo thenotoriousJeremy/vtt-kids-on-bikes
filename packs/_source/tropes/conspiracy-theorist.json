@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope07000000",
+  "_key": "!items!kobtrope07000000",
+  "name": "Conspiracy Theorist",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Saw the pattern before anyone else. Nobody believes them — yet.</p>",
+    "stats": {
+      "brains": 20,
+      "brawn": 4,
+      "charm": 6,
+      "fight": 12,
+      "flight": 10,
+      "grit": 8
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

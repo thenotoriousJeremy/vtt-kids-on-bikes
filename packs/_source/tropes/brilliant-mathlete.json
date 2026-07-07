@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope00000000",
+  "_key": "!items!kobtrope00000000",
+  "name": "Brilliant Mathlete",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Numbers make sense; people are harder. The smartest kid in the room, and everyone knows it.</p>",
+    "stats": {
+      "brains": 20,
+      "brawn": 4,
+      "charm": 8,
+      "fight": 6,
+      "flight": 12,
+      "grit": 10
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

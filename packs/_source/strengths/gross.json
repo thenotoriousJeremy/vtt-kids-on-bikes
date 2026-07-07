@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren02000000",
+  "_key": "!items!kobstren02000000",
+  "name": "Gross",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Willing and able to be truly disgusting when it helps.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

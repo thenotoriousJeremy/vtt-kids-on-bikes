@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope06000000",
+  "_key": "!items!kobtrope06000000",
+  "name": "Adventurous Scout",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Prepared for anything, with a badge to prove it.</p>",
+    "stats": {
+      "brains": 20,
+      "brawn": 8,
+      "charm": 10,
+      "fight": 4,
+      "flight": 6,
+      "grit": 12
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

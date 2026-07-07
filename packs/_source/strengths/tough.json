@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren12000000",
+  "_key": "!items!kobstren12000000",
+  "name": "Tough",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Takes a hit and keeps moving.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

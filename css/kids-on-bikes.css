@@ -1,0 +1,270 @@
+/* Kids on Bikes 2E (Unofficial) — sheet styles */
+
+.kids-on-bikes {
+  --kob-accent: #e4572e;
+  --kob-accent-dark: #b93f1c;
+  --kob-paper: var(--color-cool-5, #f4f1ea);
+  --kob-ink: var(--color-dark-1, #1f1b16);
+  --kob-radius: 6px;
+}
+
+/* ---------- header ---------- */
+
+.kids-on-bikes .kob-header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--kob-accent);
+}
+
+.kids-on-bikes .kob-portrait {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border: 2px solid var(--kob-accent);
+  border-radius: var(--kob-radius);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.kids-on-bikes .kob-identity {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.kids-on-bikes .kob-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  border-bottom: 1px dashed transparent;
+}
+
+.kids-on-bikes .kob-name:hover,
+.kids-on-bikes .kob-name:focus {
+  border-bottom-color: var(--kob-accent);
+}
+
+.kids-on-bikes .kob-subline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.kids-on-bikes .kob-trope-name {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* ---------- tabs ---------- */
+
+.kids-on-bikes nav.tabs {
+  border-bottom: 1px solid var(--kob-accent);
+  margin-bottom: 0.5rem;
+}
+
+.kids-on-bikes section.tab {
+  padding: 0.5rem 0.75rem;
+  overflow-y: auto;
+}
+
+/* ---------- stats ---------- */
+
+.kids-on-bikes .kob-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.kids-on-bikes .kob-stats-compact {
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0.5rem 0;
+}
+
+.kids-on-bikes .kob-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border-light-2, #999);
+  border-radius: var(--kob-radius);
+}
+
+.kids-on-bikes .kob-stat-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+}
+
+.kids-on-bikes .kob-roll {
+  width: 100%;
+  font-weight: 700;
+  background: var(--kob-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--kob-radius);
+  cursor: pointer;
+  line-height: 1.8;
+}
+
+.kids-on-bikes .kob-roll:hover {
+  background: var(--kob-accent-dark);
+}
+
+/* ---------- counters ---------- */
+
+.kids-on-bikes .kob-counters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kids-on-bikes .kob-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--color-border-light-2, #999);
+  border-radius: var(--kob-radius);
+}
+
+.kids-on-bikes .kob-counter-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.kids-on-bikes .kob-counter-value {
+  min-width: 2ch;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.kids-on-bikes .kob-counter button {
+  width: 1.6rem;
+  height: 1.6rem;
+  line-height: 1;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.kids-on-bikes .kob-take-loss,
+.kids-on-bikes .kob-use-power {
+  border-radius: var(--kob-radius);
+  padding: 0.3rem 0.75rem;
+  width: auto;
+}
+
+/* ---------- trait lists ---------- */
+
+.kids-on-bikes .kob-trait-section {
+  margin-bottom: 0.75rem;
+}
+
+.kids-on-bikes .kob-trait-section h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--kob-accent);
+  font-size: 1rem;
+  padding-bottom: 0.15rem;
+}
+
+.kids-on-bikes .kob-item-list {
+  list-style: none;
+  margin: 0.25rem 0;
+  padding: 0;
+}
+
+.kids-on-bikes .kob-item-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.25rem;
+  border-bottom: 1px dotted var(--color-border-light-2, #ccc);
+}
+
+.kids-on-bikes .kob-item-list img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border: none;
+  border-radius: 4px;
+  flex: 0 0 auto;
+}
+
+.kids-on-bikes .kob-item-name {
+  flex: 1;
+}
+
+.kids-on-bikes .kob-aspect-holder {
+  font-style: italic;
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
+.kids-on-bikes .kob-hint {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ---------- notes / fields ---------- */
+
+.kids-on-bikes .kob-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.kids-on-bikes .kob-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.kids-on-bikes .kob-editor {
+  margin-bottom: 0.75rem;
+}
+
+.kids-on-bikes .kob-editor prose-mirror {
+  min-height: 6rem;
+}
+
+/* ---------- item sheet ---------- */
+
+.kids-on-bikes .kob-item-sheet {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ---------- chat card ---------- */
+
+.kob-adversity-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.kob-adversity-row button {
+  width: auto;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.kob-adjusted {
+  font-size: 0.9rem;
+}

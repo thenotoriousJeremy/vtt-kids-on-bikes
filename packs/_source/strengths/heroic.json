@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren03000000",
+  "_key": "!items!kobstren03000000",
+  "name": "Heroic",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>First through the door when someone needs saving.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

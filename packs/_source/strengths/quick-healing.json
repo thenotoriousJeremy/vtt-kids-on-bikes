@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren09000000",
+  "_key": "!items!kobstren09000000",
+  "name": "Quick Healing",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Shrugs off scrapes and bruises fast.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

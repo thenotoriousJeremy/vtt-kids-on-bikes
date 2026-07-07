@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren10000000",
+  "_key": "!items!kobstren10000000",
+  "name": "Rebellious",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Rules are more like suggestions.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

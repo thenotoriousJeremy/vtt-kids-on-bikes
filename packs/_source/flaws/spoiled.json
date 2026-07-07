@@ -1,0 +1,17 @@
+{
+  "_id": "kobflaw035000000",
+  "_key": "!items!kobflaw035000000",
+  "name": "Spoiled",
+  "type": "flaw",
+  "img": "icons/svg/downgrade.svg",
+  "system": {
+    "description": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

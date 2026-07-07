@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren01000000",
+  "_key": "!items!kobstren01000000",
+  "name": "Easygoing",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Hard to fluster, quick to bounce back.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

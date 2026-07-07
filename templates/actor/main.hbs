@@ -1,0 +1,36 @@
+<section class="tab {{tab.cssClass}}" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="kob-stats">
+    {{#each stats}}
+    <div class="kob-stat">
+      <label class="kob-stat-label" for="stat-{{key}}">{{label}}</label>
+      <select id="stat-{{key}}" name="system.stats.{{key}}" data-dtype="Number">
+        {{#each @root.dieSizes}}
+        <option value="{{this}}" {{#if (eq this ../die)}}selected{{/if}}>d{{this}}</option>
+        {{/each}}
+      </select>
+      <button type="button" class="kob-roll" data-action="rollStat" data-stat="{{key}}"
+              title="{{localize 'KOB.RollStat'}}">🎲 d{{die}}</button>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="kob-counters">
+    <div class="kob-counter">
+      <span class="kob-counter-label">{{localize "KOB.Adversity"}}</span>
+      <button type="button" data-action="adjustCounter" data-field="adversity" data-delta="-1">−</button>
+      <span class="kob-counter-value">{{system.adversity}}</span>
+      <button type="button" data-action="adjustCounter" data-field="adversity" data-delta="1">+</button>
+    </div>
+    <button type="button" class="kob-take-loss" data-action="takeLoss">{{localize "KOB.TakeLoss"}}</button>
+
+    {{#if isPowered}}
+    <div class="kob-counter">
+      <span class="kob-counter-label">{{localize "KOB.PsychicEnergy"}}</span>
+      <button type="button" data-action="adjustCounter" data-field="psychicEnergy" data-delta="-1">−</button>
+      <span class="kob-counter-value">{{system.psychicEnergy}}</span>
+      <button type="button" data-action="adjustCounter" data-field="psychicEnergy" data-delta="1">+</button>
+    </div>
+    <button type="button" class="kob-use-power" data-action="rollPsychic">{{localize "KOB.UsePower"}}</button>
+    {{/if}}
+  </div>
+</section>

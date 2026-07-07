@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren00000000",
+  "_key": "!items!kobstren00000000",
+  "name": "Cool Under Pressure",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Stays steady when everything goes wrong.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

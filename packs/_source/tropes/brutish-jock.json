@@ -1,0 +1,25 @@
+{
+  "_id": "kobtrope01000000",
+  "_key": "!items!kobtrope01000000",
+  "name": "Brutish Jock",
+  "type": "trope",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "description": "<p>Solves most problems with muscle. Not much for homework.</p>",
+    "stats": {
+      "brains": 4,
+      "brawn": 20,
+      "charm": 6,
+      "fight": 12,
+      "flight": 8,
+      "grit": 10
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

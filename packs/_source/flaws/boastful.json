@@ -1,0 +1,17 @@
+{
+  "_id": "kobflaw002000000",
+  "_key": "!items!kobflaw002000000",
+  "name": "Boastful",
+  "type": "flaw",
+  "img": "icons/svg/downgrade.svg",
+  "system": {
+    "description": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

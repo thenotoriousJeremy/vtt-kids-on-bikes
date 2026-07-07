@@ -1,0 +1,17 @@
+{
+  "_id": "kobstren07000000",
+  "_key": "!items!kobstren07000000",
+  "name": "Prepared",
+  "type": "strength",
+  "img": "icons/svg/upgrade.svg",
+  "system": {
+    "description": "<p>Always has the right thing in the bag.</p>"
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

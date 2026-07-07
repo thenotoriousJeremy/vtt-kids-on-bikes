@@ -1,0 +1,32 @@
+<div class="kob-item-sheet">
+  <header class="kob-header">
+    <img class="kob-portrait" src="{{item.img}}" data-action="editImage" data-edit="img" alt="{{item.name}}">
+    <input class="kob-name" type="text" name="name" value="{{item.name}}" placeholder="{{localize 'KOB.Name'}}">
+  </header>
+
+  {{#if isTrope}}
+  <div class="kob-stats kob-stats-compact">
+    {{#each stats}}
+    <label class="kob-stat">
+      <span class="kob-stat-label">{{label}}</span>
+      <select name="system.stats.{{key}}" data-dtype="Number">
+        {{#each @root.dieSizes}}
+        <option value="{{this}}" {{#if (eq this ../die)}}selected{{/if}}>d{{this}}</option>
+        {{/each}}
+      </select>
+    </label>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  {{#if isAspect}}
+  <label class="kob-field">
+    <span>{{localize "KOB.Holder"}}</span>
+    <input type="text" name="system.holder" value="{{system.holder}}">
+  </label>
+  {{/if}}
+
+  <div class="kob-editor">
+    {{formInput systemFields.description value=system.description enriched=enrichedDescription toggled=true name="system.description"}}
+  </div>
+</div>
