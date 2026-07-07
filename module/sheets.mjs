@@ -52,7 +52,8 @@ export class KOBCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
     context.stats = STATS.map(key => ({
       key,
       label: game.i18n.localize(`KOB.Stat.${key}`),
-      die: this.actor.system.stats[key]
+      die: this.actor.system.stats[key],
+      bonus: this.actor.system.statBonus?.[key] ?? 0
     }));
     context.ages = ["child", "teen", "adult"].map(key => ({
       key,

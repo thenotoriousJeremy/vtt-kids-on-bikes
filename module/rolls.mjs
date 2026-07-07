@@ -6,8 +6,9 @@ const SYSTEM_ID = "kids-on-bikes";
  */
 export async function rollStat(actor, statKey) {
   const die = actor.system.stats[statKey];
-  const roll = await new Roll(`1d${die}x`).evaluate();
-  const flavor = `${game.i18n.localize(`KOB.Stat.${statKey}`)} (d${die})`;
+  const bonus = actor.system.statBonus?.[statKey] ?? 0;
+  const roll = await new Roll(bonus > 0 ? `1d${die}x + ${bonus}` : `1d${die}x`).evaluate();
+  const flavor = `${game.i18n.localize(`KOB.Stat.${statKey}`)} (d${die}${bonus > 0 ? ", +1 age" : ""})`;
   const content = `
     ${await roll.render()}
     <div class="kob-adversity-row">

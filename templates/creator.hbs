@@ -1,0 +1,121 @@
+<nav class="kob-creator-steps">
+  {{#each steps}}
+  <span class="kob-step {{#if active}}active{{/if}} {{#if done}}done{{/if}}">{{label}}</span>
+  {{/each}}
+</nav>
+
+<section class="kob-creator-body">
+
+  {{#if (eq step "trope")}}
+  <h2>{{localize "KOB.Creator.PickTrope"}}</h2>
+  <p class="kob-hint">{{localize "KOB.Creator.TropeHint"}}</p>
+  <div class="kob-trope-grid">
+    <button type="button" class="kob-trope-card {{#unless data.tropeId}}selected{{/unless}}" data-action="pickTrope">
+      <span class="kob-item-name">{{localize "KOB.Creator.FromScratch"}}</span>
+    </button>
+    {{#each tropes}}
+    <button type="button" class="kob-trope-card {{#if selected}}selected{{/if}}" data-action="pickTrope" data-trope-id="{{id}}">
+      <img src="{{img}}" alt="">
+      <span class="kob-item-name">{{name}}</span>
+      <span class="kob-trope-spread">
+        {{#each stats}}<span>{{key}} d{{die}}</span>{{/each}}
+      </span>
+    </button>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  {{#if (eq step "age")}}
+  <h2>{{localize "KOB.Creator.PickAge"}}</h2>
+  <div class="kob-age-grid">
+    {{#each ages}}
+    <button type="button" class="kob-age-card {{#if selected}}selected{{/if}}" data-action="pickAge" data-age="{{key}}">
+      <span class="kob-age-name">{{label}}</span>
+      <span class="kob-age-detail">+1 {{bonuses}}</span>
+      <span class="kob-age-detail">{{localize "KOB.Creator.Grants"}}: {{strength}}</span>
+    </button>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  {{#if (eq step "stats")}}
+  <h2>{{localize "KOB.Creator.AssignStats"}}</h2>
+  <p class="kob-hint">{{localize "KOB.Creator.StatsHint"}}</p>
+  <div class="kob-stats">
+    {{#each stats}}
+    <div class="kob-stat">
+      <label class="kob-stat-label">{{label}}{{#if boosted}} <span class="kob-badge">+1</span>{{/if}}</label>
+      <select name="stat.{{key}}" data-dtype="Number">
+        {{#each options}}
+        <option value="{{d}}" {{#if selected}}selected{{/if}}>d{{d}}</option>
+        {{/each}}
+      </select>
+    </div>
+    {{/each}}
+  </div>
+  {{#if dupWarning}}<p class="kob-warn">{{localize "KOB.Creator.DupWarn"}}</p>{{/if}}
+  {{/if}}
+
+  {{#if (eq step "strengths")}}
+  <h2>{{localize "KOB.Creator.PickStrengths"}}</h2>
+  <p class="kob-hint">{{localize "KOB.Creator.StrengthsHint"}} ({{chosenCount}}/2)</p>
+  <p class="kob-auto">{{localize "KOB.Creator.AutoGranted"}}: <strong>{{autoStrength}}</strong></p>
+  <ul class="kob-pick-list">
+    {{#each strengths}}
+    <li>
+      <button type="button" class="kob-pick {{#if checked}}checked{{/if}}" data-action="toggleStrength" data-strength-id="{{id}}" {{#if disabled}}disabled{{/if}}>
+        <i class="fas {{#if checked}}fa-check-square{{else}}fa-square{{/if}}"></i> {{name}}
+      </button>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+
+  {{#if (eq step "flaw")}}
+  <h2>{{localize "KOB.Creator.PickFlaw"}}</h2>
+  <p class="kob-hint">{{localize "KOB.Creator.FlawHint"}}</p>
+  <ul class="kob-pick-list kob-pick-list-cols">
+    {{#each flaws}}
+    <li>
+      <button type="button" class="kob-pick {{#if selected}}checked{{/if}}" data-action="pickFlaw" data-flaw-id="{{id}}">
+        <i class="fas {{#if selected}}fa-dot-circle{{else}}fa-circle{{/if}}"></i> {{name}}
+      </button>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+
+  {{#if (eq step "details")}}
+  <h2>{{localize "KOB.Creator.Details"}}</h2>
+  <div class="kob-fields">
+    <label class="kob-field"><span>{{localize "KOB.Creator.FirstName"}} *</span>
+      <input type="text" name="first" value="{{data.first}}" autofocus></label>
+    <label class="kob-field"><span>{{localize "KOB.Creator.LastName"}}</span>
+      <input type="text" name="last" value="{{data.last}}"></label>
+    <label class="kob-field"><span>{{localize "KOB.Motivation"}}</span>
+      <input type="text" name="motivation" value="{{data.motivation}}"></label>
+    <label class="kob-field"><span>{{localize "KOB.Fear"}}</span>
+      <input type="text" name="fear" value="{{data.fear}}"></label>
+    <label class="kob-field"><span>{{localize "KOB.Obligation"}}</span>
+      <input type="text" name="obligation" value="{{data.obligation}}"></label>
+    <label class="kob-field"><span>{{localize "KOB.Knack"}}</span>
+      <input type="text" name="knack" value="{{data.knack}}"></label>
+    <label class="kob-field"><span>{{localize "KOB.Bike"}}</span>
+      <input type="text" name="bike" value="{{data.bike}}"></label>
+  </div>
+  <label class="kob-field">
+    <span>{{localize "KOB.Creator.Backpack"}}</span>
+    <textarea name="backpack" rows="4" placeholder="{{localize 'KOB.Creator.BackpackHint'}}">{{data.backpack}}</textarea>
+  </label>
+  {{/if}}
+
+</section>
+
+<footer class="kob-creator-nav">
+  <button type="button" data-action="back" {{#if isFirst}}disabled{{/if}}>{{localize "KOB.Creator.Back"}}</button>
+  {{#if isLast}}
+  <button type="button" class="kob-finish" data-action="finish"><i class="fas fa-bolt"></i> {{localize "KOB.Creator.Finish"}}</button>
+  {{else}}
+  <button type="button" class="kob-next" data-action="next">{{localize "KOB.Creator.Next"}}</button>
+  {{/if}}
+</footer>
