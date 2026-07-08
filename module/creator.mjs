@@ -71,7 +71,10 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
       ctx.tropes = (await packDocs("tropes")).map(t => ({
         id: t.id, name: t.name, img: t.img,
         selected: t.id === this.data.tropeId,
-        stats: STATS.map(s => ({ key: s, die: t.system.stats[s] }))
+        stats: STATS.map(s => {
+          const die = t.system.stats[s];
+          return { key: s, die, pct: Math.round(die / 20 * 100) };
+        })
       }));
     } else if (stepId === "age") {
       ctx.ages = AGES.map(a => ({
@@ -205,9 +208,15 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     const name = `${this.data.first} ${this.data.last}`.trim();
     const stats = this.#currentStats();
 
+    // Default the character portrait to the chosen trope's artwork (from-scratch keeps Foundry's default).
+    const tropeDoc = this.data.tropeId
+      ? await game.packs.get("kids-on-bikes.tropes").getDocument(this.data.tropeId)
+      : null;
+
     const actor = await Actor.create({
       name,
       type: "character",
+      ...(tropeDoc?.img ? { img: tropeDoc.img, prototypeToken: { texture: { src: tropeDoc.img } } } : {}),
       system: {
         stats,
         age: this.data.age,
@@ -226,7 +235,7 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
       return doc ? doc.toObject() : null;
     };
 
-    const trope = await grab("tropes", this.data.tropeId);
+    const trope = tropeDoc ? tropeDoc.toObject() : null;
     if (trope) items.push(trope);
     for (const sid of this.data.strengthIds) {
       const s = await grab("strengths", sid);

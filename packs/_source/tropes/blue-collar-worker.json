@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope04000000",
   "name": "Blue-Collar Worker",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/bluecollar.webp",
   "system": {
     "description": "<p>Hard hands, long shifts, and no patience for nonsense.</p>",
     "stats": {

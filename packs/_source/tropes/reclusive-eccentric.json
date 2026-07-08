@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope08000000",
   "name": "Reclusive Eccentric",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/reclusive.webp",
   "system": {
     "description": "<p>The strange one in the old house at the edge of town.</p>",
     "stats": {

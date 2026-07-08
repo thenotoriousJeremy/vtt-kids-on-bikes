@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope07000000",
   "name": "Conspiracy Theorist",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/conspiracy.webp",
   "system": {
     "description": "<p>Saw the pattern before anyone else. Nobody believes them — yet.</p>",
     "stats": {

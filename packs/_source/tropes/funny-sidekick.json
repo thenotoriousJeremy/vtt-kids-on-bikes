@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope02000000",
   "name": "Funny Sidekick",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/sidekick.webp",
   "system": {
     "description": "<p>Always has a joke ready, especially when things get scary.</p>",
     "stats": {

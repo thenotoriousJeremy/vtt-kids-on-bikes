@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope06000000",
   "name": "Adventurous Scout",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/adventurer.webp",
   "system": {
     "description": "<p>Prepared for anything, with a badge to prove it.</p>",
     "stats": {

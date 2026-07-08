@@ -3,11 +3,15 @@
     {{#each stats}}
     <div class="kob-stat">
       <label class="kob-stat-label" for="stat-{{key}}">{{label}}{{#if bonus}} <span class="kob-badge">+{{bonus}}</span>{{/if}}</label>
+      {{#if @root.isGM}}
       <select id="stat-{{key}}" name="system.stats.{{key}}" data-dtype="Number">
         {{#each @root.dieSizes}}
         <option value="{{this}}" {{#if (eq this ../die)}}selected{{/if}}>d{{this}}</option>
         {{/each}}
       </select>
+      {{else}}
+      <span class="kob-die-static">d{{die}}</span>
+      {{/if}}
       <button type="button" class="kob-roll" data-action="rollStat" data-stat="{{key}}"
               title="{{localize 'KOB.RollStat'}}">🎲 d{{die}}</button>
     </div>

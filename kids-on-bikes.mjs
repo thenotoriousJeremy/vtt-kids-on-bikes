@@ -30,4 +30,7 @@ Hooks.once("init", () => {
   registerCreatorButton();
 });
 
+// Tag <body> so the global accent theme (css/kids-on-bikes.css) only skins the core UI when this system is active.
+Hooks.once("ready", () => document.body.classList.add("kob-theme"));
+
 Hooks.on("renderChatMessageHTML", onRenderChatMessage);

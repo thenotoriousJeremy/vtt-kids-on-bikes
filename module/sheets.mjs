@@ -48,6 +48,7 @@ export class KOBCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
     context.system = this.actor.system;
     context.systemFields = this.actor.system.schema.fields;
     context.isPowered = this.isPowered;
+    context.isGM = game.user.isGM;
     context.dieSizes = DIE_SIZES;
     context.stats = STATS.map(key => ({
       key,

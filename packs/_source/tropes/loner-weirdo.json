@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope03000000",
   "name": "Loner Weirdo",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/weirdo.webp",
   "system": {
     "description": "<p>Keeps to themselves and endures more than anyone suspects.</p>",
     "stats": {

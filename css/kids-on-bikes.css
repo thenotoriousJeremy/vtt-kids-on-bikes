@@ -91,8 +91,8 @@
 }
 
 .kids-on-bikes .kob-portrait {
-  width: 64px;
-  height: 64px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border: 2px solid var(--kob-accent);
   border-radius: var(--kob-radius);
@@ -173,6 +173,13 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 0.8rem;
+}
+
+/* read-only die shown to players (GM sees the select instead) */
+.kids-on-bikes .kob-die-static {
+  font-family: var(--kob-display);
+  font-size: 1.2rem;
+  color: var(--kob-accent-dark);
 }
 
 .kids-on-bikes .kob-roll {
@@ -409,6 +416,11 @@
   background: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   text-align: center;
+  /* override Foundry core button: fixed height + nowrap crushed the stacked content */
+  height: auto;
+  min-height: 0;
+  line-height: 1.2;
+  white-space: normal;
 }
 .kob-trope-card:hover,
 .kob-age-card:hover { border-color: var(--kob-cyan); }
@@ -418,16 +430,52 @@
   box-shadow: 0 0 0 2px var(--kob-cyan) inset;
   background: rgba(78, 205, 196, 0.15);
 }
-.kob-trope-card img { width: 42px; height: 42px; border: none; }
-.kob-trope-card .kob-item-name { font-family: var(--kob-display); font-size: 1rem; }
-.kob-trope-spread {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.15rem 0.4rem;
-  justify-content: center;
-  font-size: 0.65rem;
-  opacity: 0.8;
+.kob-trope-card img {
+  width: 104px;
+  height: 104px;
+  border: none;
+  border-radius: var(--kob-radius);
+  object-fit: cover;
 }
+.kob-trope-card .kob-item-name { font-family: var(--kob-display); font-size: 1rem; }
+
+/* keep card text dark on hover/focus (core button:hover forces white -> vanishes) */
+.kids-on-bikes .kob-trope-card,
+.kids-on-bikes .kob-age-card { color: var(--kob-ink); }
+.kids-on-bikes .kob-trope-card:hover,
+.kids-on-bikes .kob-age-card:hover {
+  color: var(--kob-ink);
+  background: rgba(78, 205, 196, 0.12);
+}
+
+/* per-stat die bar chart (replaces the plain "brains d8" text) */
+.kob-trope-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+}
+.kob-bar-row {
+  display: grid;
+  grid-template-columns: 3.2em 1fr 1.8em;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6rem;
+}
+.kob-bar-key { text-align: right; text-transform: capitalize; opacity: 0.85; }
+.kob-bar-track {
+  height: 0.5rem;
+  background: rgba(43, 45, 66, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.kob-bar-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--kob-accent), var(--kob-cyan));
+  border-radius: 3px;
+}
+.kob-bar-die { font-weight: 700; color: var(--kob-accent-dark); }
 .kob-age-card .kob-age-name { font-family: var(--kob-display); font-size: 1.3rem; color: var(--kob-accent-dark); }
 .kob-age-card .kob-age-detail { font-size: 0.75rem; }
 
@@ -500,4 +548,63 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+/* single-root wrapper for ApplicationV2 part; carries the column layout window-content used to own */
+.kob-creator-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ============================================================
+   Global core-UI accent pass (gated on body.kob-theme, set in
+   kids-on-bikes.mjs). Matches Foundry v13 DOM: translucent panels
+   share .faded-ui; toolbar buttons are .ui-control icon buttons;
+   active state = [aria-pressed="true"]. Uses outline/color/shadow
+   only (no border/layout change) so core UI can't shift.
+   ============================================================ */
+
+body.kob-theme {
+  --kob-accent: #ff7b28;
+  --kob-cyan: #4ecdc4;
+  --kob-paper: #fff7ef;
+  --kob-ink: #2b2d42;
+}
+
+/* Replace core parchment/marble on sidebar directories + compendium/
+   directory windows with the KOB paper + faint synthwave grid.
+   :not(.kids-on-bikes) leaves the system's own sheets alone. */
+body.kob-theme #sidebar-content,
+body.kob-theme #sidebar .directory,
+body.kob-theme #combat,
+body.kob-theme #combat-tracker,
+body.kob-theme .combat-tracker,
+body.kob-theme .application:not(.kids-on-bikes) .directory,
+body.kob-theme .application:not(.kids-on-bikes) .combat-tracker,
+body.kob-theme .application:not(.kids-on-bikes) .window-content {
+  background-color: var(--kob-paper);
+  background-image:
+    linear-gradient(180deg, rgba(255, 123, 40, 0.14), rgba(92, 61, 102, 0.10) 60%, rgba(78, 205, 196, 0.10)),
+    repeating-linear-gradient(0deg, rgba(43, 45, 66, 0.05) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(90deg, rgba(43, 45, 66, 0.05) 0 1px, transparent 1px 26px);
+  color: var(--kob-ink);
+}
+
+/* icon buttons: hover + active accent */
+body.kob-theme .ui-control:hover {
+  color: var(--kob-accent);
+}
+body.kob-theme .ui-control[aria-pressed="true"] {
+  color: var(--kob-accent);
+  box-shadow: inset 0 0 0 2px var(--kob-cyan);
+  border-radius: 4px;
+}
+
+/* players list hover accent */
+body.kob-theme #players .player:hover .player-name,
+body.kob-theme #players .player:hover {
+  color: var(--kob-accent);
 }

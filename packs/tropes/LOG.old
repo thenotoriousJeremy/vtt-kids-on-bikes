@@ -1,0 +1,5 @@
+2026/07/07-21:02:38.694 a69c Delete type=3 #1
+2026/07/07-21:02:38.702 9270 Level-0 table #5: started
+2026/07/07-21:02:38.704 9270 Level-0 table #5: 1788 bytes OK
+2026/07/07-21:02:38.707 9270 Delete type=0 #3
+2026/07/07-21:02:38.707 9270 Manual compaction at level-0 from '!items!kobtrope00000000' @ 72057594037927935 : 1 .. '!items!kobtrope10000000' @ 0 : 0; will stop at (end)

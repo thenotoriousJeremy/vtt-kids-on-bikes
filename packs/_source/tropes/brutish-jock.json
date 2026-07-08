@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope01000000",
   "name": "Brutish Jock",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/jock.webp",
   "system": {
     "description": "<p>Solves most problems with muscle. Not much for homework.</p>",
     "stats": {

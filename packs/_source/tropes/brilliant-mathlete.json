@@ -3,7 +3,7 @@
   "_key": "!items!kobtrope00000000",
   "name": "Brilliant Mathlete",
   "type": "trope",
-  "img": "icons/svg/mystery-man.svg",
+  "img": "systems/kids-on-bikes/assets/tropes/mathlete.webp",
   "system": {
     "description": "<p>Numbers make sense; people are harder. The smartest kid in the room, and everyone knows it.</p>",
     "stats": {
