@@ -1,3 +1,5 @@
+import { statFormula } from "./mechanics.mjs";
+
 const SYSTEM_ID = "kids-on-bikes";
 
 /**
@@ -7,7 +9,7 @@ const SYSTEM_ID = "kids-on-bikes";
 export async function rollStat(actor, statKey) {
   const die = actor.system.stats[statKey];
   const bonus = actor.system.statBonus?.[statKey] ?? 0;
-  const roll = await new Roll(bonus > 0 ? `1d${die}x + ${bonus}` : `1d${die}x`).evaluate();
+  const roll = await new Roll(statFormula(die, bonus)).evaluate();
   const flavor = `${game.i18n.localize(`KOB.Stat.${statKey}`)} (d${die}${bonus > 0 ? ", +1 age" : ""})`;
   const content = `
     ${await roll.render()}
@@ -20,12 +22,32 @@ export async function rollStat(actor, statKey) {
         (<span data-kob-spent>0</span> ${game.i18n.localize("KOB.TokensSpent")})
       </span>
     </div>`;
-  return roll.toMessage({
+  const message = await roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor }),
     flavor,
     content,
     flags: { [SYSTEM_ID]: { base: roll.total, spent: 0 } }
   }, { rollMode: game.settings.get("core", "rollMode") });
+
+  // KOB: a 1 on the stat die earns an Adversity token. Only the initial roll can
+  // be a 1 (explosions only trigger on the max face), so check the first result.
+  const firstFace = roll.dice[0]?.results?.[0]?.result;
+  if (firstFace === 1 && actor.isOwner) {
+    const take = await foundry.applications.api.DialogV2.confirm({
+      window: { title: game.i18n.localize("KOB.RolledOne") },
+      content: `<p>${game.i18n.localize("KOB.RolledOnePrompt")}</p>`,
+      rejectClose: false
+    });
+    if (take) {
+      await actor.update({ "system.adversity": (actor.system.adversity ?? 0) + 1 });
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        content: game.i18n.format("KOB.GainedAdversity", { name: actor.name })
+      });
+    }
+  }
+
+  return message;
 }
 
 /** Planned failure: take the loss, gain an adversity token, no roll. */
@@ -75,13 +97,25 @@ export function onRenderChatMessage(message, html) {
   if (spentEl) spentEl.textContent = String(spent);
   btn.addEventListener("click", async ev => {
     const actor = await fromUuid(ev.currentTarget.dataset.actorUuid);
-    if (!actor?.isOwner) return;
+    if (!actor?.isOwner) return ui.notifications.warn(game.i18n.localize("KOB.NotYourRoll"));
     if ((actor.system.adversity ?? 0) < 1) {
       return ui.notifications.warn(game.i18n.localize("KOB.NoAdversity"));
     }
+    // Bumping the total writes a flag on the chat message, which only its author
+    // (or a GM) may do. Bail BEFORE spending so a token is never lost to a
+    // permission error. ponytail: self-boost only; cross-player gifting is a
+    // separate feature (would need a GM-side socket to write the flag).
+    if (!message.isAuthor && !game.user.isGM) {
+      return ui.notifications.warn(game.i18n.localize("KOB.CantEditRoll"));
+    }
     await actor.update({ "system.adversity": actor.system.adversity - 1 });
-    // ponytail: only the message author or GM can bump the total — matches the
-    // rule that you spend tokens on your own roll; token gifts happen socially.
-    await message.setFlag(SYSTEM_ID, "spent", (message.getFlag(SYSTEM_ID, "spent") ?? 0) + 1);
+    try {
+      await message.setFlag(SYSTEM_ID, "spent", (message.getFlag(SYSTEM_ID, "spent") ?? 0) + 1);
+    } catch (err) {
+      // Keep the spend atomic: refund the token if the flag write fails.
+      await actor.update({ "system.adversity": actor.system.adversity + 1 });
+      console.error("KOB | adversity spend failed, token refunded", err);
+      ui.notifications.error(game.i18n.localize("KOB.SpendFailed"));
+    }
   });
 }

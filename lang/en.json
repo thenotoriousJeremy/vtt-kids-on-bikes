@@ -97,6 +97,13 @@
   "KOB.Delete": "Delete",
   "KOB.Create": "Create",
 
+  "KOB.RolledOne": "Rolled a 1",
+  "KOB.RolledOnePrompt": "The die came up 1. Take an Adversity token?",
+  "KOB.GainedAdversity": "{name} takes an Adversity token (rolled a 1).",
+  "KOB.NotYourRoll": "You don't own this character.",
+  "KOB.CantEditRoll": "Only the roll's owner can spend tokens on it.",
+  "KOB.SpendFailed": "Couldn't apply the token — it was refunded.",
+
   "KOB.SheetCharacter": "Kids on Bikes Character Sheet",
   "KOB.SheetPowered": "Kids on Bikes Powered Character Sheet",
   "KOB.SheetItem": "Kids on Bikes Item Sheet"

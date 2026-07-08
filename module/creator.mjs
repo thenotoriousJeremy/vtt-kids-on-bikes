@@ -1,4 +1,5 @@
 import { DIE_SIZES, STATS, AGE_BONUS, AGE_STRENGTH } from "./data.mjs";
+import { dieToPct, hasDuplicateDice, defaultLadder } from "./mechanics.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -52,9 +53,17 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     bike: ""
   };
 
-  async _prepareContext() {
-    const packDocs = async id => Array.from(await game.packs.get(`kids-on-bikes.${id}`).getDocuments())
+  // Pack documents are stable for the wizard's lifetime; load each pack once
+  // (every pick/toggle re-renders, which used to re-fetch all docs each time).
+  #packCache = {};
+  async #packDocs(id) {
+    this.#packCache[id] ??= Array.from(await game.packs.get(`kids-on-bikes.${id}`).getDocuments())
       .sort((a, b) => a.name.localeCompare(b.name));
+    return this.#packCache[id];
+  }
+
+  async _prepareContext() {
+    const packDocs = id => this.#packDocs(id);
 
     const ctx = {
       step: STEPS[this.step],
@@ -73,7 +82,7 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
         selected: t.id === this.data.tropeId,
         stats: STATS.map(s => {
           const die = t.system.stats[s];
-          return { key: s, die, pct: Math.round(die / 20 * 100) };
+          return { key: s, die, pct: dieToPct(die) };
         })
       }));
     } else if (stepId === "age") {
@@ -115,14 +124,11 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
   // ---- stat helpers ----
 
   #currentStats() {
-    if (this.data.stats) return this.data.stats;
-    // Default: identity ladder (each die once) so a from-scratch build is already valid.
-    return Object.fromEntries(STATS.map((s, i) => [s, DIE_SIZES[i]]));
+    return this.data.stats ?? defaultLadder();
   }
 
   #statsHaveDuplicates(stats) {
-    const vals = STATS.map(s => stats[s]);
-    return new Set(vals).size !== vals.length;
+    return hasDuplicateDice(stats);
   }
 
   // ---- step validation ----
