@@ -5,7 +5,14 @@
     <ol class="kob-item-list">
       <li data-item-id="{{trope.id}}">
         <img src="{{trope.img}}" alt="">
+        {{#if trope.system.description}}
+        <details class="kob-trait-item">
+          <summary class="kob-item-name">{{trope.name}}</summary>
+          <div class="kob-desc-body">{{{trope.system.description}}}</div>
+        </details>
+        {{else}}
         <span class="kob-item-name">{{trope.name}}</span>
+        {{/if}}
         <button type="button" class="kob-icon-btn" data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></button>
         <button type="button" class="kob-icon-btn" data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></button>
       </li>
@@ -23,7 +30,14 @@
       {{#each strengths}}
       <li data-item-id="{{id}}">
         <img src="{{img}}" alt="">
+        {{#if system.description}}
+        <details class="kob-trait-item">
+          <summary class="kob-item-name">{{name}}</summary>
+          <div class="kob-desc-body">{{{system.description}}}</div>
+        </details>
+        {{else}}
         <span class="kob-item-name">{{name}}</span>
+        {{/if}}
         <button type="button" class="kob-icon-btn" data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></button>
         <button type="button" class="kob-icon-btn" data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></button>
       </li>
@@ -39,7 +53,14 @@
       {{#each flaws}}
       <li data-item-id="{{id}}">
         <img src="{{img}}" alt="">
+        {{#if system.description}}
+        <details class="kob-trait-item">
+          <summary class="kob-item-name">{{name}}</summary>
+          <div class="kob-desc-body">{{{system.description}}}</div>
+        </details>
+        {{else}}
         <span class="kob-item-name">{{name}}</span>
+        {{/if}}
         <button type="button" class="kob-icon-btn" data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></button>
         <button type="button" class="kob-icon-btn" data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></button>
       </li>
@@ -55,7 +76,14 @@
       {{#each backpack}}
       <li data-item-id="{{id}}">
         <img src="{{img}}" alt="">
+        {{#if system.description}}
+        <details class="kob-trait-item">
+          <summary class="kob-item-name">{{name}}</summary>
+          <div class="kob-desc-body">{{{system.description}}}</div>
+        </details>
+        {{else}}
         <span class="kob-item-name">{{name}}</span>
+        {{/if}}
         <button type="button" class="kob-icon-btn" data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></button>
         <button type="button" class="kob-icon-btn" data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></button>
       </li>
@@ -72,8 +100,14 @@
       {{#each aspects}}
       <li data-item-id="{{id}}">
         <img src="{{img}}" alt="">
-        <span class="kob-item-name">{{name}}</span>
-        <span class="kob-aspect-holder">{{system.holder}}</span>
+        {{#if system.description}}
+        <details class="kob-trait-item">
+          <summary class="kob-item-name">{{name}} <span class="kob-aspect-holder">{{system.holder}}</span></summary>
+          <div class="kob-desc-body">{{{system.description}}}</div>
+        </details>
+        {{else}}
+        <span class="kob-item-name">{{name}} <span class="kob-aspect-holder">{{system.holder}}</span></span>
+        {{/if}}
         <button type="button" class="kob-icon-btn" data-action="editItem" title="{{localize 'KOB.Edit'}}"><i class="fas fa-edit"></i></button>
         <button type="button" class="kob-icon-btn" data-action="deleteItem" title="{{localize 'KOB.Delete'}}"><i class="fas fa-trash"></i></button>
       </li>

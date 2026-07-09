@@ -16,7 +16,7 @@
       <span class="kob-item-name">{{localize "KOB.Creator.FromScratch"}}</span>
     </button>
     {{#each tropes}}
-    <button type="button" class="kob-trope-card {{#if selected}}selected{{/if}}" data-action="pickTrope" data-trope-id="{{id}}">
+    <button type="button" class="kob-trope-card {{#if selected}}selected{{/if}}" data-action="pickTrope" data-trope-id="{{id}}" title="{{title}}">
       <img src="{{img}}" alt="">
       <span class="kob-item-name">{{name}}</span>
       <span class="kob-trope-bars">
@@ -71,7 +71,7 @@
   <ul class="kob-pick-list">
     {{#each strengths}}
     <li>
-      <button type="button" class="kob-pick {{#if checked}}checked{{/if}}" data-action="toggleStrength" data-strength-id="{{id}}" {{#if disabled}}disabled{{/if}}>
+      <button type="button" class="kob-pick {{#if checked}}checked{{/if}}" data-action="toggleStrength" data-strength-id="{{id}}" {{#if disabled}}disabled{{/if}} title="{{title}}">
         <i class="fas {{#if checked}}fa-check-square{{else}}fa-square{{/if}}"></i> {{name}}
       </button>
     </li>
@@ -85,8 +85,33 @@
   <ul class="kob-pick-list kob-pick-list-cols">
     {{#each flaws}}
     <li>
-      <button type="button" class="kob-pick {{#if selected}}checked{{/if}}" data-action="pickFlaw" data-flaw-id="{{id}}">
+      <button type="button" class="kob-pick {{#if selected}}checked{{/if}}" data-action="pickFlaw" data-flaw-id="{{id}}" title="{{title}}">
         <i class="fas {{#if selected}}fa-dot-circle{{else}}fa-circle{{/if}}"></i> {{name}}
+      </button>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+
+  {{#if (eq step "bike")}}
+  <h2>{{localize "KOB.Creator.PickBike"}}</h2>
+  <p class="kob-hint">{{localize "KOB.Creator.BikeHint"}}</p>
+  <h3>{{localize "KOB.Bike.ColorLabel"}}</h3>
+  <ul class="kob-pick-list">
+    {{#each bikeColors}}
+    <li>
+      <button type="button" class="kob-pick {{#if selected}}checked{{/if}}" data-action="pickBikeColor" data-bike-color="{{key}}">
+        <i class="fas {{#if selected}}fa-dot-circle{{else}}fa-circle{{/if}}"></i> <strong>{{label}}</strong> — <span class="kob-bike-effect">{{effect}}</span>
+      </button>
+    </li>
+    {{/each}}
+  </ul>
+  <h3>{{localize "KOB.Bike.UpgradeLabel"}}</h3>
+  <ul class="kob-pick-list">
+    {{#each bikeUpgrades}}
+    <li>
+      <button type="button" class="kob-pick {{#if selected}}checked{{/if}}" data-action="pickBikeUpgrade" data-bike-upgrade="{{key}}">
+        <i class="fas {{#if selected}}fa-dot-circle{{else}}fa-circle{{/if}}"></i> <strong>{{label}}</strong> — <span class="kob-bike-effect">{{effect}}</span>
       </button>
     </li>
     {{/each}}
@@ -110,6 +135,8 @@
       <input type="text" name="knack" value="{{data.knack}}"></label>
     <label class="kob-field"><span>{{localize "KOB.Bike"}}</span>
       <input type="text" name="bike" value="{{data.bike}}"></label>
+    <label class="kob-field kob-check"><span>{{localize "KOB.Creator.Powered"}}</span>
+      <input type="checkbox" name="powered" {{#if data.powered}}checked{{/if}}></label>
   </div>
   <label class="kob-field">
     <span>{{localize "KOB.Creator.Backpack"}}</span>

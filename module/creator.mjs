@@ -1,10 +1,18 @@
 import { DIE_SIZES, STATS, AGE_BONUS, AGE_STRENGTH } from "./data.mjs";
 import { dieToPct, hasDuplicateDice, defaultLadder } from "./mechanics.mjs";
+import { bikeChoices } from "./sheets.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
+const SYSTEM_ID = "kids-on-bikes";
 const AGES = ["child", "teen", "adult"];
-const STEPS = ["trope", "age", "stats", "strengths", "flaw", "details"];
+const BASE_STEPS = ["trope", "age", "stats", "strengths", "flaw", "details"];
+
+/** Name -> slug, matching the slugs in AGE_STRENGTH (e.g. "Quick Healing" -> "quick-healing"). */
+const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+/** Plain-text of an HTML description, for hover tooltips on the picker cards. */
+const stripHtml = html => (html || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 
 /**
  * Guided Kids on Bikes character-creation wizard.
@@ -22,6 +30,8 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
       pickAge: KOBCreator.#onPickAge,
       toggleStrength: KOBCreator.#onToggleStrength,
       pickFlaw: KOBCreator.#onPickFlaw,
+      pickBikeColor: KOBCreator.#onPickBikeColor,
+      pickBikeUpgrade: KOBCreator.#onPickBikeUpgrade,
       back: KOBCreator.#onBack,
       next: KOBCreator.#onNext,
       finish: KOBCreator.#onFinish
@@ -43,6 +53,8 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     stats: null,         // { brains: 8, ... } — set on trope pick or defaulted
     strengthIds: [],     // chosen (max 2)
     flawId: null,
+    bikeColor: "",       // key from BIKE_COLORS
+    bikeUpgrade: "",     // key from BIKE_UPGRADES
     first: "",
     last: "",
     motivation: "",
@@ -50,7 +62,8 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     obligation: "",
     knack: "",
     backpack: "",
-    bike: ""
+    bike: "",
+    powered: false      // create a Powered (psychic) character instead of a plain one
   };
 
   // Pack documents are stable for the wizard's lifetime; load each pack once
@@ -62,23 +75,32 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     return this.#packCache[id];
   }
 
+  /** Wizard steps; the Bike step appears only when the world has bikes enabled. */
+  get steps() {
+    return game.settings.get(SYSTEM_ID, "useBikes")
+      ? ["trope", "age", "stats", "strengths", "flaw", "bike", "details"]
+      : BASE_STEPS;
+  }
+
   async _prepareContext() {
     const packDocs = id => this.#packDocs(id);
+    const steps = this.steps;
 
     const ctx = {
-      step: STEPS[this.step],
+      step: steps[this.step],
       stepIndex: this.step,
-      stepCount: STEPS.length,
-      steps: STEPS.map((id, i) => ({ id, label: game.i18n.localize(`KOB.Creator.Step.${id}`), active: i === this.step, done: i < this.step })),
+      stepCount: steps.length,
+      steps: steps.map((id, i) => ({ id, label: game.i18n.localize(`KOB.Creator.Step.${id}`), active: i === this.step, done: i < this.step })),
       isFirst: this.step === 0,
-      isLast: this.step === STEPS.length - 1,
+      isLast: this.step === steps.length - 1,
       data: this.data
     };
 
-    const stepId = STEPS[this.step];
+    const stepId = steps[this.step];
     if (stepId === "trope") {
       ctx.tropes = (await packDocs("tropes")).map(t => ({
         id: t.id, name: t.name, img: t.img,
+        title: stripHtml(t.system.description),
         selected: t.id === this.data.tropeId,
         stats: STATS.map(s => {
           const die = t.system.stats[s];
@@ -109,14 +131,19 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
       ctx.autoStrength = game.i18n.localize(`KOB.Creator.AgeStrength.${this.data.age}`);
       ctx.strengths = (await packDocs("strengths")).map(s => ({
         id: s.id, name: s.name,
+        title: stripHtml(s.system.description),
         checked: chosen.includes(s.id),
         disabled: chosen.length >= 2 && !chosen.includes(s.id)
       }));
       ctx.chosenCount = chosen.length;
     } else if (stepId === "flaw") {
       ctx.flaws = (await packDocs("flaws")).map(f => ({
-        id: f.id, name: f.name, selected: f.id === this.data.flawId
+        id: f.id, name: f.name, title: stripHtml(f.system.description),
+        selected: f.id === this.data.flawId
       }));
+    } else if (stepId === "bike") {
+      ctx.bikeColors = bikeChoices("Color", this.data.bikeColor);
+      ctx.bikeUpgrades = bikeChoices("Upgrade", this.data.bikeUpgrade);
     }
     return ctx;
   }
@@ -134,12 +161,13 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
   // ---- step validation ----
 
   #canAdvance() {
-    switch (STEPS[this.step]) {
+    switch (this.steps[this.step]) {
       case "trope": return true; // trope optional (from scratch allowed)
       case "age": return AGES.includes(this.data.age);
       case "stats": return !this.#statsHaveDuplicates(this.#currentStats());
       case "strengths": return this.data.strengthIds.length === 2;
       case "flaw": return !!this.data.flawId;
+      case "bike": return !!this.data.bikeColor && !!this.data.bikeUpgrade;
       case "details": return this.data.first.trim().length > 0;
       default: return true;
     }
@@ -154,6 +182,9 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
       const doc = await game.packs.get("kids-on-bikes.tropes").getDocument(id);
       this.data.tropeName = doc.name;
       this.data.stats = { ...doc.system.stats };
+      // Prefill the trope's recommended bike (player can still change it on the Bike step).
+      if (doc.system.bikeColor) this.data.bikeColor = doc.system.bikeColor;
+      if (doc.system.bikeUpgrade) this.data.bikeUpgrade = doc.system.bikeUpgrade;
     } else {
       this.data.tropeName = "";
       this.data.stats = null;
@@ -180,6 +211,16 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
+  static #onPickBikeColor(event, target) {
+    this.data.bikeColor = target.dataset.bikeColor;
+    this.render();
+  }
+
+  static #onPickBikeUpgrade(event, target) {
+    this.data.bikeUpgrade = target.dataset.bikeUpgrade;
+    this.render();
+  }
+
   static #onBack() {
     if (this.step > 0) this.step--;
     this.render();
@@ -187,7 +228,7 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static #onNext() {
     if (!this.#canAdvance()) return ui.notifications.warn(game.i18n.localize("KOB.Creator.CompleteStep"));
-    if (this.step < STEPS.length - 1) this.step++;
+    if (this.step < this.steps.length - 1) this.step++;
     this.render();
   }
 
@@ -197,8 +238,9 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const k of ["first", "last", "motivation", "fear", "obligation", "knack", "backpack", "bike"]) {
       if (k in d) this.data[k] = d[k];
     }
+    if ("powered" in d) this.data.powered = !!d.powered;
     // Stat selects (stats step). FormDataExtended.object expands "stat.brains" -> d.stat.brains
-    if (STEPS[this.step] === "stats" && d.stat) {
+    if (this.steps[this.step] === "stats" && d.stat) {
       const stats = { ...this.#currentStats() };
       for (const s of STATS) {
         if (s in d.stat) stats[s] = Number(d.stat[s]);
@@ -221,7 +263,7 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 
     const actor = await Actor.create({
       name,
-      type: "character",
+      type: this.data.powered ? "powered" : "character",
       ...(tropeDoc?.img ? { img: tropeDoc.img, prototypeToken: { texture: { src: tropeDoc.img } } } : {}),
       system: {
         stats,
@@ -230,7 +272,9 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
         fear: this.data.fear,
         obligation: this.data.obligation,
         knack: this.data.knack,
-        bike: this.data.bike
+        bike: this.data.bike,
+        bikeColor: this.data.bikeColor,
+        bikeUpgrade: this.data.bikeUpgrade
       }
     });
 
@@ -250,8 +294,14 @@ export class KOBCreator extends HandlebarsApplicationMixin(ApplicationV2) {
     // Auto age strength (by slug -> find in pack)
     const ageSlug = AGE_STRENGTH[this.data.age];
     const strengthPack = game.packs.get("kids-on-bikes.strengths");
-    const ageDoc = Array.from(await strengthPack.getDocuments()).find(d => d.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") === ageSlug);
-    if (ageDoc && !this.data.strengthIds.includes(ageDoc.id)) items.push(ageDoc.toObject());
+    const ageDoc = Array.from(await strengthPack.getDocuments()).find(d => slugify(d.name) === ageSlug);
+    if (!ageDoc) {
+      // Matched by slug of the localized pack name; a rename/translation that breaks the
+      // match must not silently drop the age strength.
+      ui.notifications.warn(game.i18n.format("KOB.Creator.AgeStrengthMissing", { slug: ageSlug }));
+    } else if (!this.data.strengthIds.includes(ageDoc.id)) {
+      items.push(ageDoc.toObject());
+    }
     const flaw = await grab("flaws", this.data.flawId);
     if (flaw) items.push(flaw);
     // Backpack: split textarea lines into backpack items

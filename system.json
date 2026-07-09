@@ -2,7 +2,7 @@
   "id": "kids-on-bikes",
   "title": "Kids on Bikes 2E (Unofficial)",
   "description": "An unofficial, fan-made system for Kids on Bikes Second Edition. Kids on Bikes is © Hunters Entertainment / Renegade Game Studios. No rulebook text is reproduced; you need the rulebook to play.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "compatibility": {
     "minimum": "13",
     "verified": "14.359"
@@ -64,5 +64,5 @@
   ],
   "url": "https://github.com/thenotoriousJeremy/vtt-kids-on-bikes",
   "manifest": "https://github.com/thenotoriousJeremy/vtt-kids-on-bikes/releases/latest/download/system.json",
-  "download": "https://github.com/thenotoriousJeremy/vtt-kids-on-bikes/releases/download/v0.1.0/system.zip"
+  "download": "https://github.com/thenotoriousJeremy/vtt-kids-on-bikes/releases/download/v0.2.3/system.zip"
 }

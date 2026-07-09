@@ -3,20 +3,17 @@
     {{#each stats}}
     <div class="kob-stat">
       <label class="kob-stat-label" for="stat-{{key}}">{{label}}{{#if bonus}} <span class="kob-badge">+{{bonus}}</span>{{/if}}</label>
-      {{#if @root.isGM}}
       <select id="stat-{{key}}" name="system.stats.{{key}}" data-dtype="Number">
         {{#each @root.dieSizes}}
         <option value="{{this}}" {{#if (eq this ../die)}}selected{{/if}}>d{{this}}</option>
         {{/each}}
       </select>
-      {{else}}
-      <span class="kob-die-static">d{{die}}</span>
-      {{/if}}
       <button type="button" class="kob-roll" data-action="rollStat" data-stat="{{key}}"
               title="{{localize 'KOB.RollStat'}}">🎲 d{{die}}</button>
     </div>
     {{/each}}
   </div>
+  {{#if dupWarning}}<p class="kob-warn">{{localize "KOB.Creator.DupWarn"}}</p>{{/if}}
 
   <div class="kob-counters">
     <div class="kob-counter">
@@ -32,7 +29,8 @@
       <span class="kob-counter-label">{{localize "KOB.PsychicEnergy"}}</span>
       <button type="button" data-action="adjustCounter" data-field="psychicEnergy" data-delta="-1">−</button>
       <span class="kob-counter-value">{{system.psychicEnergy}}</span>
-      <button type="button" data-action="adjustCounter" data-field="psychicEnergy" data-delta="1">+</button>
+      {{! ponytail: fixed 7-token pool. Add a maxPsychicEnergy field if variable pools are needed. }}
+      <button type="button" data-action="adjustCounter" data-field="psychicEnergy" data-delta="1" data-max="7">+</button>
     </div>
     <button type="button" class="kob-use-power" data-action="rollPsychic">{{localize "KOB.UsePower"}}</button>
     {{/if}}

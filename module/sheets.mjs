@@ -1,10 +1,22 @@
 import { DIE_SIZES, STATS } from "./data.mjs";
+import { hasDuplicateDice, BIKE_COLORS, BIKE_UPGRADES } from "./mechanics.mjs";
 import { rollStat, rollPsychic, takeLoss } from "./rolls.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2, ItemSheetV2 } = foundry.applications.sheets;
 
 const PATH = "systems/kids-on-bikes/templates";
+
+/** Bike color/upgrade options for a <select>: localized name + short effect, current one flagged. */
+export function bikeChoices(kind, selected) {
+  const keys = kind === "Color" ? BIKE_COLORS : BIKE_UPGRADES;
+  return keys.map(key => ({
+    key,
+    selected: key === selected,
+    label: game.i18n.localize(`KOB.Bike.${kind}.${key}`),
+    effect: game.i18n.localize(`KOB.Bike.${kind}Effect.${key}`)
+  }));
+}
 
 export class KOBCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
@@ -56,6 +68,7 @@ export class KOBCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
       die: this.actor.system.stats[key],
       bonus: this.actor.system.statBonus?.[key] ?? 0
     }));
+    context.dupWarning = hasDuplicateDice(this.actor.system.stats);
     context.ages = ["child", "teen", "adult"].map(key => ({
       key,
       label: game.i18n.localize(`KOB.Age.${key}`)
@@ -65,6 +78,13 @@ export class KOBCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
     context.flaws = this.actor.items.filter(i => i.type === "flaw");
     context.backpack = this.actor.items.filter(i => i.type === "backpack");
     context.aspects = this.actor.items.filter(i => i.type === "aspect");
+    context.useBikes = game.settings.get("kids-on-bikes", "useBikes");
+    context.bikeColorOptions = bikeChoices("Color", this.actor.system.bikeColor);
+    context.bikeUpgradeOptions = bikeChoices("Upgrade", this.actor.system.bikeUpgrade);
+    context.bikeColorEffect = this.actor.system.bikeColor ? game.i18n.localize(`KOB.Bike.ColorEffect.${this.actor.system.bikeColor}`) : "";
+    context.bikeUpgradeEffect = this.actor.system.bikeUpgrade ? game.i18n.localize(`KOB.Bike.UpgradeEffect.${this.actor.system.bikeUpgrade}`) : "";
+    context.bikeColorLabel = this.actor.system.bikeColor ? game.i18n.localize(`KOB.Bike.Color.${this.actor.system.bikeColor}`) : "—";
+    context.bikeUpgradeLabel = this.actor.system.bikeUpgrade ? game.i18n.localize(`KOB.Bike.Upgrade.${this.actor.system.bikeUpgrade}`) : "—";
     context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation
       .enrichHTML(this.actor.system.description, { relativeTo: this.actor });
     context.enrichedNotes = await foundry.applications.ux.TextEditor.implementation
@@ -106,7 +126,9 @@ export class KOBCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
   static async #onAdjustCounter(event, target) {
     const field = target.dataset.field;
     const delta = Number(target.dataset.delta);
-    const value = Math.max(0, foundry.utils.getProperty(this.actor, `system.${field}`) + delta);
+    const max = target.dataset.max !== undefined ? Number(target.dataset.max) : Infinity;
+    const raw = foundry.utils.getProperty(this.actor, `system.${field}`) + delta;
+    const value = Math.min(max, Math.max(0, raw));
     return this.actor.update({ [`system.${field}`]: value });
   }
 
@@ -167,6 +189,9 @@ export class KOBItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
         label: game.i18n.localize(`KOB.Stat.${key}`),
         die: this.item.system.stats[key]
       }));
+      context.useBikes = game.settings.get("kids-on-bikes", "useBikes");
+      context.bikeColorOptions = bikeChoices("Color", this.item.system.bikeColor);
+      context.bikeUpgradeOptions = bikeChoices("Upgrade", this.item.system.bikeUpgrade);
     }
     context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation
       .enrichHTML(this.item.system.description, { relativeTo: this.item });

@@ -2,7 +2,7 @@
 // (not shipped in releases — dev-only regression guard for the pure game math).
 import assert from "node:assert/strict";
 import {
-  DIE_SIZES, STATS,
+  DIE_SIZES, STATS, BIKE_COLORS, BIKE_UPGRADES,
   dieToPct, hasDuplicateDice, defaultLadder, statFormula, ageBonusMap
 } from "../module/mechanics.mjs";
 
@@ -32,5 +32,11 @@ assert.equal(teen.fight, 1);
 assert.equal(teen.brains, 0);
 assert.equal(Object.values(teen).reduce((a, b) => a + b, 0), 2);
 assert.equal(Object.values(ageBonusMap("nope")).reduce((a, b) => a + b, 0), 0);
+
+// bike lists: non-empty and no duplicate keys (lang keys are derived from these)
+assert.equal(BIKE_COLORS.length, 12);
+assert.equal(BIKE_UPGRADES.length, 10);
+assert.equal(new Set(BIKE_COLORS).size, BIKE_COLORS.length);
+assert.equal(new Set(BIKE_UPGRADES).size, BIKE_UPGRADES.length);
 
 console.log("mechanics: all assertions passed");

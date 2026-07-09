@@ -1,6 +1,7 @@
 import { statFormula } from "./mechanics.mjs";
 
 const SYSTEM_ID = "kids-on-bikes";
+const SOCKET = `system.${SYSTEM_ID}`;
 
 /**
  * Roll a stat check: 1dX, exploding recursively on the maximum face
@@ -14,7 +15,7 @@ export async function rollStat(actor, statKey) {
   const content = `
     ${await roll.render()}
     <div class="kob-adversity-row">
-      <button type="button" data-kob-spend data-actor-uuid="${actor.uuid}">
+      <button type="button" data-kob-spend>
         ${game.i18n.localize("KOB.SpendAdversity")}
       </button>
       <span class="kob-adjusted">${game.i18n.localize("KOB.Total")}:
@@ -85,6 +86,38 @@ export async function rollPsychic(actor) {
   }, { rollMode: game.settings.get("core", "rollMode") });
 }
 
+/**
+ * Apply one spent Adversity token: decrement the spender's actor pool and bump the
+ * roll message's running total. Runs on a client with permission to write the flag
+ * (the message author, or the GM handling a relayed request) — the GM can update any
+ * actor and any message, so this is atomic with a refund on flag-write failure.
+ */
+async function applySpend({ messageId, actorUuid }) {
+  const message = game.messages.get(messageId);
+  const actor = await fromUuid(actorUuid);
+  if (!message || !actor || (actor.system.adversity ?? 0) < 1) return;
+  await actor.update({ "system.adversity": actor.system.adversity - 1 });
+  try {
+    await message.setFlag(SYSTEM_ID, "spent", (message.getFlag(SYSTEM_ID, "spent") ?? 0) + 1);
+  } catch (err) {
+    // Keep the spend atomic: refund the token if the flag write fails.
+    await actor.update({ "system.adversity": actor.system.adversity + 1 });
+    console.error("KOB | adversity spend failed, token refunded", err);
+    ui.notifications.error(game.i18n.localize("KOB.SpendFailed"));
+  }
+}
+
+/** Register the GM-side socket listener that applies relayed spend requests from other players. */
+export function registerAdversitySocket() {
+  game.socket.on(SOCKET, data => {
+    if (data?.action !== "spendAdversity") return;
+    // Only the single responding GM applies, so a relayed spend isn't double-counted
+    // when several GMs are connected.
+    if (game.users.activeGM !== game.user) return;
+    applySpend(data);
+  });
+}
+
 /** Wire the adversity-spend button on rendered chat cards; refresh displayed totals from flags. */
 export function onRenderChatMessage(message, html) {
   const btn = html.querySelector("[data-kob-spend]");
@@ -95,27 +128,23 @@ export function onRenderChatMessage(message, html) {
   const spentEl = html.querySelector("[data-kob-spent]");
   if (totalEl) totalEl.textContent = String(base + spent);
   if (spentEl) spentEl.textContent = String(spent);
-  btn.addEventListener("click", async ev => {
-    const actor = await fromUuid(ev.currentTarget.dataset.actorUuid);
-    if (!actor?.isOwner) return ui.notifications.warn(game.i18n.localize("KOB.NotYourRoll"));
+  btn.addEventListener("click", async () => {
+    // KOB: you spend YOUR OWN tokens — your own roll or a same-scene ally's.
+    // ponytail: source is the user's assigned character. Add an actor picker if a
+    // player drives several kids. Scene membership isn't enforced — trust the table.
+    const actor = game.user.character;
+    if (!actor) return ui.notifications.warn(game.i18n.localize("KOB.NoAssignedCharacter"));
     if ((actor.system.adversity ?? 0) < 1) {
       return ui.notifications.warn(game.i18n.localize("KOB.NoAdversity"));
     }
-    // Bumping the total writes a flag on the chat message, which only its author
-    // (or a GM) may do. Bail BEFORE spending so a token is never lost to a
-    // permission error. ponytail: self-boost only; cross-player gifting is a
-    // separate feature (would need a GM-side socket to write the flag).
-    if (!message.isAuthor && !game.user.isGM) {
-      return ui.notifications.warn(game.i18n.localize("KOB.CantEditRoll"));
-    }
-    await actor.update({ "system.adversity": actor.system.adversity - 1 });
-    try {
-      await message.setFlag(SYSTEM_ID, "spent", (message.getFlag(SYSTEM_ID, "spent") ?? 0) + 1);
-    } catch (err) {
-      // Keep the spend atomic: refund the token if the flag write fails.
-      await actor.update({ "system.adversity": actor.system.adversity + 1 });
-      console.error("KOB | adversity spend failed, token refunded", err);
-      ui.notifications.error(game.i18n.localize("KOB.SpendFailed"));
+    // Writing the message flag needs the author or a GM. The author/GM does it locally;
+    // anyone else relays to the responding GM (who owns nothing but may write both docs).
+    if (message.isAuthor || game.user.isGM) {
+      await applySpend({ messageId: message.id, actorUuid: actor.uuid });
+    } else if (game.users.activeGM) {
+      game.socket.emit(SOCKET, { action: "spendAdversity", messageId: message.id, actorUuid: actor.uuid });
+    } else {
+      ui.notifications.warn(game.i18n.localize("KOB.NoActiveGM"));
     }
   });
 }

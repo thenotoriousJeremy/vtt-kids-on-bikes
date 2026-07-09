@@ -5,6 +5,11 @@
 export const DIE_SIZES = [4, 6, 8, 10, 12, 20];
 export const STATS = ["brains", "brawn", "charm", "fight", "flight", "grit"];
 
+// A bike has one color and one upgrade, each granting a riding bonus (labels + effect
+// summaries live in lang/en.json under KOB.Bike.*). Keys only here — no rulebook text.
+export const BIKE_COLORS = ["black", "blue", "gold", "gray", "green", "neon-pink", "orange", "purple", "red", "rusty", "silver", "white"];
+export const BIKE_UPGRADES = ["banana-seat", "basket", "bell", "first-aid-kit", "milk-crate", "pegs", "tassels", "ten-speeder", "trading-cards", "pedal-powered-lights"];
+
 // Age bracket grants +1 to two stats (numeric, added to rolls) and one auto strength.
 export const AGE_BONUS = {
   child: ["charm", "flight"],

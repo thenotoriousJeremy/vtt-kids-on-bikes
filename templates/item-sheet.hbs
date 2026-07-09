@@ -17,6 +17,26 @@
     </label>
     {{/each}}
   </div>
+  {{#if useBikes}}
+  <label class="kob-field">
+    <span>{{localize "KOB.Bike.ColorLabel"}}</span>
+    <select name="system.bikeColor">
+      <option value="" {{#unless system.bikeColor}}selected{{/unless}}>—</option>
+      {{#each bikeColorOptions}}
+      <option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <label class="kob-field">
+    <span>{{localize "KOB.Bike.UpgradeLabel"}}</span>
+    <select name="system.bikeUpgrade">
+      <option value="" {{#unless system.bikeUpgrade}}selected{{/unless}}>—</option>
+      {{#each bikeUpgradeOptions}}
+      <option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </label>
+  {{/if}}
   {{/if}}
 
   {{#if isAspect}}

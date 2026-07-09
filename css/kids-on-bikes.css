@@ -623,3 +623,33 @@ body.kob-theme #players .player:hover .player-name,
 body.kob-theme #players .player:hover {
   color: var(--kob-accent);
 }
+
+/* ---------- expandable descriptions in trait lists ---------- */
+.kids-on-bikes .kob-item-list li { align-items: flex-start; }
+.kids-on-bikes .kob-trait-item { flex: 1; min-width: 0; }
+.kids-on-bikes .kob-trait-item > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 2px 0;
+}
+.kids-on-bikes .kob-trait-item > summary::-webkit-details-marker { display: none; }
+.kids-on-bikes .kob-trait-item > summary::before {
+  content: "\25B8";                 /* ▸ */
+  color: var(--kob-accent);
+  display: inline-block;
+  width: 1em;
+}
+.kids-on-bikes .kob-trait-item[open] > summary::before { content: "\25BE"; }   /* ▾ */
+.kids-on-bikes .kob-desc-body {
+  padding: 0.25rem 0 0.35rem 1em;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* ---------- collapsible bike picker (notes tab) ---------- */
+.kids-on-bikes .kob-bike-pick { margin: 0.3rem 0; }
+.kids-on-bikes .kob-bike-pick > summary { cursor: pointer; font-weight: 700; }
+.kids-on-bikes .kob-bike-pick-label { color: var(--kob-accent-dark); }
+.kids-on-bikes .kob-bike-pick .kob-pick { display: flex; align-items: baseline; gap: 0.3rem; }
+.kids-on-bikes .kob-bike-pick .kob-pick input { flex: 0 0 auto; }
+.kids-on-bikes .kob-bike-effect { font-size: 0.8rem; opacity: 0.8; }

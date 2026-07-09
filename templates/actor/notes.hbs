@@ -16,10 +16,42 @@
       <span>{{localize "KOB.Knack"}}</span>
       <input type="text" name="system.knack" value="{{system.knack}}">
     </label>
+    {{#if useBikes}}
     <label class="kob-field">
       <span>{{localize "KOB.Bike"}}</span>
       <input type="text" name="system.bike" value="{{system.bike}}">
     </label>
+    <details class="kob-bike-pick">
+      <summary><span class="kob-bike-pick-label">{{localize "KOB.Bike.ColorLabel"}}:</span> <strong>{{bikeColorLabel}}</strong></summary>
+      <ul class="kob-pick-list">
+        <li><label class="kob-pick {{#unless system.bikeColor}}checked{{/unless}}">
+          <input type="radio" name="system.bikeColor" value="" {{#unless system.bikeColor}}checked{{/unless}}> <strong>—</strong>
+        </label></li>
+        {{#each bikeColorOptions}}
+        <li><label class="kob-pick {{#if selected}}checked{{/if}}">
+          <input type="radio" name="system.bikeColor" value="{{key}}" {{#if selected}}checked{{/if}}>
+          <strong>{{label}}</strong> — <span class="kob-bike-effect">{{effect}}</span>
+        </label></li>
+        {{/each}}
+      </ul>
+    </details>
+    {{#if bikeColorEffect}}<p class="kob-hint kob-bike-effect">{{bikeColorEffect}}</p>{{/if}}
+    <details class="kob-bike-pick">
+      <summary><span class="kob-bike-pick-label">{{localize "KOB.Bike.UpgradeLabel"}}:</span> <strong>{{bikeUpgradeLabel}}</strong></summary>
+      <ul class="kob-pick-list">
+        <li><label class="kob-pick {{#unless system.bikeUpgrade}}checked{{/unless}}">
+          <input type="radio" name="system.bikeUpgrade" value="" {{#unless system.bikeUpgrade}}checked{{/unless}}> <strong>—</strong>
+        </label></li>
+        {{#each bikeUpgradeOptions}}
+        <li><label class="kob-pick {{#if selected}}checked{{/if}}">
+          <input type="radio" name="system.bikeUpgrade" value="{{key}}" {{#if selected}}checked{{/if}}>
+          <strong>{{label}}</strong> — <span class="kob-bike-effect">{{effect}}</span>
+        </label></li>
+        {{/each}}
+      </ul>
+    </details>
+    {{#if bikeUpgradeEffect}}<p class="kob-hint kob-bike-effect">{{bikeUpgradeEffect}}</p>{{/if}}
+    {{/if}}
   </div>
 
   <div class="kob-editor">
